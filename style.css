@@ -9,21 +9,11 @@ body {
 /* Layout container */
 .layout {
     display: flex;
-    min-height: 100vh;   /* VERY IMPORTANT */
+    min-height: 100vh; 
 }
 
 /* Sidebar full height */
-.sidebar {
-    width: 190px;
-    background: #0e4d64;
-    color: white;
-    padding: 25px 20px;
-
-    position: fixed;   /* THIS IS KEY */
-    top: 0;
-    left: 0;
-    height: 100vh;     /* Full screen height */
-}
+/*
 
 .logo {
     font-size: 22px;
@@ -32,17 +22,66 @@ body {
 }
 
 .sidebar a {
-    display: block;
-    padding: 12px;
-    margin-bottom: 8px;
-    text-decoration: none;
-    color: white;
-    border-radius: 8px;
-    transition: 0.3s;
+    
 }
 
 .sidebar a:hover {
     background: rgba(255,255,255,0.15);
+} */
+
+.sidebar {
+    position: fixed;
+    top: 90px;      /* below topbar */
+    left: 0;
+
+    height: calc(100vh - 90px);
+
+    display: flex;
+    justify-content: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 60px;               /* collapsed width */
+    padding: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+
+    text-decoration: none;
+    border-radius: 50px;
+
+    transition: all 0.4s ease;
+}
+
+/* Emoji */
+.logo-icon {
+    font-size: 28px;
+}
+
+/* Text hidden initially */
+.logo-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0e4d64;
+
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.logo-link:hover {
+    width: 220px;              /* expands smoothly */
+    background: #e6f4f7;       /* optional hover background */
+}
+
+/* Reveal text */
+.logo-link:hover .logo-text {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* ==== Main Content ==== */
@@ -59,7 +98,7 @@ body {
     margin-bottom: 25px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    border-left: 6px solid #2ba7a0;
+    /* border-left: 6px solid #2ba7a0; */
     transition: 0.3s ease;
 }
 
@@ -112,4 +151,61 @@ h2 {
 
 .delete-btn:hover {
     background: #c62828;
+}
+
+/* Top Navigation Bar */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 90px;
+    width: calc(100% - 90px);
+
+    height: 70px;
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    z-index: 1000;
+}
+
+/* Push content down */
+.content {
+    margin-left: 90px;   /* sidebar width */
+    margin-top: 70px;    /* topbar height */
+    padding: 40px;
+}
+.brand {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0e4d64;
+}
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.contact {
+    font-size: 14px;
+    color: #555;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #0e4d64;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #00a99d;
 }

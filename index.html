@@ -34,10 +34,11 @@ fetch('sidebar.html')
 <body>
 
 <div class="layout">
+    
 
         <div id="sidebar-container"></div>
   
-
+<div id="topbar-container"></div>
     <main class="content">
     <h2>🏥 Healthcare Dashboard</h2>
 
@@ -58,10 +59,12 @@ fetch('sidebar.html')
 </div>
 
 </body>
+
 <script>
-    async function logout() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-}
+fetch('topmenu.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('topbar-container').innerHTML = data;
+  });
 </script>
 </html>

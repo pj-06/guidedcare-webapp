@@ -29,7 +29,7 @@ fetch('sidebar.html')
 
     
     <div id="sidebar-container"></div>
-
+<div id="topbar-container"></div>
 
     <main class="content">
 
@@ -58,4 +58,11 @@ fetch('sidebar.html')
 
 
 </body>
+<script>
+fetch('topmenu.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('topbar-container').innerHTML = data;
+  });
+</script>
 </html>

@@ -26,10 +26,11 @@ fetch('sidebar.html')
 <body onload="checkAuth(); loadFamilyDropdown(); loadRecords();">
 
 <div class="layout">
+    
 
     <div id="sidebar-container"></div>
 
-
+<div id="topbar-container"></div>
     <main class="content">
 
         <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
@@ -57,4 +58,11 @@ fetch('sidebar.html')
 
 
 </body>
+<script>
+fetch('topmenu.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('topbar-container').innerHTML = data;
+  });
+</script>
 </html>
