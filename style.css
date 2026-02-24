@@ -1,65 +1,101 @@
+/* ==== Global Reset ==== */
 body {
+    font-family: 'Inter', sans-serif;
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f8fc;
 }
 
+/* Layout container */
 .layout {
     display: flex;
-    min-height: 100vh;
+    min-height: 100vh;   /* VERY IMPORTANT */
 }
 
+/* Sidebar full height */
 .sidebar {
-    width: 220px;
-    background-color: #0b1c3d;
+    width: 240px;
+    background: #0e4d64;
     color: white;
-    padding: 20px;
+    padding: 25px 20px;
+    min-height: 100vh;   /* Forces full screen height */
+}
+
+.logo {
+    font-size: 22px;
+    margin-bottom: 40px;
+    font-weight: bold;
 }
 
 .sidebar a {
     display: block;
-    color: white;
-    padding: 10px 0;
+    padding: 12px;
+    margin-bottom: 8px;
     text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
 .sidebar a:hover {
-    background-color: #1e3a8a;
-    padding-left: 10px;
+    background: rgba(255,255,255,0.15);
 }
 
-.logo {
-    margin-bottom: 30px;
-}
-
+/* ==== Main Content ==== */
 .content {
     flex: 1;
-    padding: 30px;
+    padding: 40px;
 }
 
+/* ==== Medical Cards ==== */
 .card {
-    background: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    background: #ffffff;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border-left: 6px solid #2ba7a0;
+    transition: 0.3s ease;
 }
 
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* ==== Inputs ==== */
 .input {
     width: 100%;
-    padding: 8px;
-    margin: 8px 0;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
 }
 
+/* ==== Buttons ==== */
 .btn {
-    background-color: #0b1c3d;
+    background: #2ba7a0;
     color: white;
-    padding: 8px 15px;
+    padding: 10px 16px;
+    border-radius: 8px;
     border: none;
-    border-radius: 5px;
+    font-weight: 500;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn:hover {
-    background-color: #1e3a8a;
+    background: #23918b;
+}
+
+/* ==== Dropdown ==== */
+select.input {
+    background: white;
+}
+
+/* ==== Section Headings ==== */
+h2 {
+    margin-top: 0;
+    color: #0e4d64;
 }

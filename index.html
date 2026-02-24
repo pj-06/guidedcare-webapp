@@ -3,22 +3,65 @@
 <head>
     <title>GuidedCare Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const { data: members } = await supabaseClient
+        .from("family_members")
+        .select("*");
+
+    const { data: records } = await supabaseClient
+        .from("health_records")
+        .select("*");
+
+    document.getElementById("memberCount").innerText = members.length;
+    document.getElementById("recordCount").innerText = records.length;
+
+});
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('sidebar-container').innerHTML = data;
+  });
+</script>
 </head>
 <body>
 
 <div class="layout">
-    <aside class="sidebar">
-        <h2 class="logo">GuidedCare</h2>
-        <a href="family.html">Family Members</a>
-        <a href="records.html">Health Records</a>
-        <a href="community.html">Community</a>
-        <a href="doctor.html">Talk to Doctor</a>
-    </aside>
+
+        <div id="sidebar-container"></div>
+  
 
     <main class="content">
-        <h1>Welcome to GuidedCare</h1>
-    </main>
+    <h2>🏥 Healthcare Dashboard</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:30px;">
+        
+        <div class="card">
+            <h3>👨‍👩‍👧 Total Family Members</h3>
+            <p id="memberCount" style="font-size:24px;font-weight:bold;">0</p>
+        </div>
+
+        <div class="card">
+            <h3>🩺 Total Medical Records</h3>
+            <p id="recordCount" style="font-size:24px;font-weight:bold;">0</p>
+        </div>
+
+    </div>
+</main>
 </div>
 
 </body>
+<script>
+    async function logout() {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+}
+</script>
 </html>

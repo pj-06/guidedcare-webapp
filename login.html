@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 </script>
+<script>
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('sidebar-container').innerHTML = data;
+  });
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -62,7 +70,7 @@ async function login() {
 
     // Check if session exists
     if(data.session) {
-        window.location.href = "family.html";
+        window.location.href = "index.html";
     } else {
         document.getElementById("message").innerText = "Login failed. No session created.";
     }

@@ -13,21 +13,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 </script>
+<script>
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('sidebar-container').innerHTML = data;
+  });
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
-        <h2 class="logo">GuidedCare</h2>
-        <a href="family.html">Family Members</a>
-        <a href="records.html">Health Records</a>
-        <a href="community.html">Community</a>
-        <a href="doctor.html">Talk to Doctor</a>
-        <a href="#" onclick="logout()">Logout</a>
-    </aside>
+    
+    <div id="sidebar-container"></div>
+
 
     <main class="content">
+
+        <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
+    <h2>👨‍👩‍👧 Family Management</h2>
+    <p>Manage patient details and healthcare records securely.</p>
+</div>
 
         <div class="card">
             <h2>Add Family Member</h2>

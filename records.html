@@ -13,25 +13,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+fetch('sidebar.html')
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById('sidebar-container').innerHTML = data;
+  });
+</script>
 </head>
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
-        <h2 class="logo">GuidedCare</h2>
-        <a href="family.html">Family Members</a>
-        <a href="records.html">Health Records</a>
-        <a href="community.html">Community</a>
-        <a href="doctor.html">Talk to Doctor</a>
-        <a href="#" onclick="logout()">Logout</a>
-    </aside>
+    <div id="sidebar-container"></div>
+
 
     <main class="content">
 
+        <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
+    <h2>🩺 Patient Medical Records</h2>
+    <p>Add and monitor health records efficiently.</p>
+</div>
+
         <div class="card">
             <h2>Add Health Record</h2>
-            <input class="input" id="patient" placeholder="Patient Name">
+            <select class="input" id="patientSelect"></select>
             <input class="input" id="diagnosis" placeholder="Diagnosis">
             <input class="input" id="prescription" placeholder="Prescription">
             <button class="btn" onclick="addRecord()">Save</button>
@@ -48,13 +55,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 <script>
 async function addRecord() {
-    const patient = document.getElementById("patient").value;
+    const patient = document.getElementById("patientSelect").value;
     const diagnosis = document.getElementById("diagnosis").value;
     const prescription = document.getElementById("prescription").value;
 
     await supabaseClient.from("health_records").insert([
         { patient_name: patient, diagnosis, prescription }
     ]);
+
+    document.getElementById("diagnosis").value = "";
+    document.getElementById("prescription").value = "";
 
     loadRecords();
 }
@@ -70,11 +80,32 @@ async function loadRecords() {
 
     let html = "";
     data.forEach(record => {
-        html += `<p>${record.patient_name} - ${record.diagnosis}</p>`;
+        html += `
+<div class="card">
+    <h3>${record.patient_name}</h3>
+    <p><strong>Diagnosis:</strong> ${record.diagnosis}</p>
+    <p><strong>Prescription:</strong> ${record.prescription}</p>
+</div>
+`;
     });
 
     document.getElementById("recordList").innerHTML = html;
 }
+
+async function loadFamilyDropdown() {
+    const { data } = await supabaseClient
+        .from("family_members")
+        .select("*");
+
+    let options = "";
+    data.forEach(member => {
+        options += `<option value="${member.name}">${member.name}</option>`;
+    });
+
+    document.getElementById("patientSelect").innerHTML = options;
+}
+
+loadFamilyDropdown();
 
 loadRecords();
 </script>
