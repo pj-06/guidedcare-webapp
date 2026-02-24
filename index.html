@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
-     <script src="script.js"></script>
+    
     <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -24,18 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<script>
-fetch('sidebar.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('sidebar-container').innerHTML = data;
-  });
-</script>
 </head>
 <body>
-
-<div class="layout">
-    
 
         <div id="sidebar-container"></div>
   
@@ -57,15 +47,25 @@ fetch('sidebar.html')
 
     </div>
 </main>
-</div>
-
-</body>
-
 <script>
-fetch('topmenu.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('topbar-container').innerHTML = data;
-  });
+Promise.all([
+    fetch('topmenu.html').then(res => res.text()),
+    fetch('sidebar.html').then(res => res.text())
+])
+.then(([topbarData, sidebarData]) => {
+
+    document.getElementById('topbar-container').innerHTML = topbarData;
+    document.getElementById('sidebar-container').innerHTML = sidebarData;
+
+    // AFTER injection initialize behavior
+    initScrollBehavior();
+
+    // Run page functions here
+    checkAuth();
+    loadFamily();
+});
 </script>
+
+<script src="script.js"></script>
+</body>
 </html>

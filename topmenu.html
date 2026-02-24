@@ -5,7 +5,7 @@
     </div>
 
     <div class="top-right">
-        <span class="contact">📞 +91 98765 43210</span>
+        <span class="contact">📞 +91 9876 5432 10</span>
         <span class="contact">✉ support@guidedcare.com</span>
 
         <button class="logout-btn" onclick="logout()">Logout</button>
@@ -13,9 +13,3 @@
 
 </header>
 
-<script>
-    async function logout() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-}
-</script>

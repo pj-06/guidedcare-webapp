@@ -5,38 +5,22 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
-    <script src="script.js"></script>
-    <script>
-document.addEventListener("DOMContentLoaded", async () => {
-    const { data } = await supabaseClient.auth.getSession();
-    if (!data.session) {
-        window.location.href = "login.html";
-    }
-});
-</script>
-<script>
-fetch('sidebar.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('sidebar-container').innerHTML = data;
-  });
-</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body onload="checkAuth(); loadFamily();">
+<body>
+
+<div id="topbar-container"></div>
 
 <div class="layout">
-
-    
     <div id="sidebar-container"></div>
-<div id="topbar-container"></div>
 
     <main class="content">
 
         <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
-    <h2>👨‍👩‍👧 Family Management</h2>
-    <p>Manage patient details and healthcare records securely.</p>
-</div>
+            <h2>👨‍👩‍👧 Family Management</h2>
+            <p>Manage patient details and healthcare records securely.</p>
+        </div>
 
         <div class="card">
             <h2>Add Family Member</h2>
@@ -52,17 +36,29 @@ fetch('sidebar.html')
         </div>
 
     </main>
-
 </div>
 
+<script>
+Promise.all([
+    fetch('topmenu.html').then(res => res.text()),
+    fetch('sidebar.html').then(res => res.text())
+])
+.then(([topbarData, sidebarData]) => {
 
+    document.getElementById('topbar-container').innerHTML = topbarData;
+    document.getElementById('sidebar-container').innerHTML = sidebarData;
+
+    // AFTER injection initialize behavior
+    initScrollBehavior();
+
+    // Run page functions here
+    checkAuth();
+    loadFamily();
+});
+</script>
+
+<script src="script.js"></script>
 
 </body>
-<script>
-fetch('topmenu.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('topbar-container').innerHTML = data;
-  });
-</script>
+
 </html>

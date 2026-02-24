@@ -1,4 +1,14 @@
 /* ==== Global Reset ==== */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -12,32 +22,26 @@ body {
     min-height: 100vh; 
 }
 
-/* Sidebar full height */
-/*
-
-.logo {
-    font-size: 22px;
-    margin-bottom: 40px;
-    font-weight: bold;
-}
-
-.sidebar a {
-    
-}
-
-.sidebar a:hover {
-    background: rgba(255,255,255,0.15);
-} */
 
 .sidebar {
     position: fixed;
-    top: 90px;      /* below topbar */
+    top: 70px;
     left: 0;
 
-    height: calc(100vh - 90px);
+    width: 90px;
+    /* height: calc(100vh - 70px); */
 
-    display: flex;
-    justify-content: center;
+    background: transparent;       
+    
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+.sidebar:hover {
+    width: 240px;
 }
 
 .logo-link {
@@ -74,8 +78,8 @@ body {
 
 /* Hover effect */
 .logo-link:hover {
-    width: 220px;              /* expands smoothly */
-    background: #e6f4f7;       /* optional hover background */
+    width: 230px;             
+    background: #cbe9f0;     
 }
 
 /* Reveal text */
@@ -87,9 +91,13 @@ body {
 /* ==== Main Content ==== */
 .content {
     margin-left: 240px; /* Same as sidebar width */
+    margin-top: 70px;
     padding: 40px;
     flex:1;
+    position: relative;
+    z-index: 1;
 }
+
 
 /* ==== Medical Cards ==== */
 .card {
@@ -97,7 +105,7 @@ body {
     padding: 25px;
     margin-bottom: 25px;
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    /* box-shadow: 0 6px 20px rgba(0,0,0,0.08); */
     /* border-left: 6px solid #2ba7a0; */
     transition: 0.3s ease;
 }
@@ -157,26 +165,30 @@ h2 {
 .topbar {
     position: fixed;
     top: 0;
-    left: 90px;
-    width: calc(100% - 90px);
-
+    left: 0;
+    width: 100%;          /* FULL WIDTH */
     height: 70px;
-    background: #ffffff;
+
+    background: white;
 
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     padding: 0 40px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 
-    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+
+    z-index: 2000;
+
+    transition: transform 0.3s ease;   /* for hide effect */
 }
 
 /* Push content down */
 .content {
-    margin-left: 90px;   /* sidebar width */
-    margin-top: 70px;    /* topbar height */
+    margin-left: 90px;   /* match collapsed sidebar */
+    margin-top: 70px;    /* match topbar height */
+     min-height: 200vh;
     padding: 40px;
 }
 .brand {

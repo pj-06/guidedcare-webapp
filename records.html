@@ -5,38 +5,24 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
-    <script src="script.js"></script>
-    <script>
-document.addEventListener("DOMContentLoaded", async () => {
-    const { data } = await supabaseClient.auth.getSession();
-    if (!data.session) {
-        window.location.href = "login.html";
-    }
-});
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script>
-fetch('sidebar.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('sidebar-container').innerHTML = data;
-  });
-</script>
-</head>
-<body onload="checkAuth(); loadFamilyDropdown(); loadRecords();">
-
-<div class="layout">
     
 
-    <div id="sidebar-container"></div>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
 
 <div id="topbar-container"></div>
+
+<div class="layout">
+    <div id="sidebar-container"></div>
+
     <main class="content">
 
         <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
-    <h2>🩺 Patient Medical Records</h2>
-    <p>Add and monitor health records efficiently.</p>
-</div>
+            <h2>🩺 Patient Medical Records</h2>
+            <p>Add and monitor health records efficiently.</p>
+        </div>
 
         <div class="card">
             <h2>Add Health Record</h2>
@@ -52,17 +38,29 @@ fetch('sidebar.html')
         </div>
 
     </main>
-
 </div>
 
+<script>
+Promise.all([
+    fetch('topmenu.html').then(res => res.text()),
+    fetch('sidebar.html').then(res => res.text())
+])
+.then(([topbarData, sidebarData]) => {
 
+    document.getElementById('topbar-container').innerHTML = topbarData;
+    document.getElementById('sidebar-container').innerHTML = sidebarData;
+
+    initScrollBehavior();
+
+    // 🔥 ADD THESE:
+    checkAuth();
+    loadFamilyDropdown();
+    loadRecords();
+});
+</script>
+
+<script src="script.js"></script>
 
 </body>
-<script>
-fetch('topmenu.html')
-  .then(res => res.text())
-  .then(data => {
-      document.getElementById('topbar-container').innerHTML = data;
-  });
-</script>
+
 </html>

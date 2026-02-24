@@ -108,3 +108,26 @@ async function deleteRecord(id) {
     loadRecords();
 }
 
+function initScrollBehavior() {
+    let lastScroll = 0;
+    const topbar = document.querySelector(".topbar");
+
+    // Prevent errors if topbar hasn't loaded yet or doesn't exist
+    if (!topbar) return;
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.scrollY;
+
+        if (currentScroll <= 0) {
+            topbar.style.transform = "translateY(0)";
+        } 
+        else if (currentScroll > lastScroll && currentScroll > 80) {
+            topbar.style.transform = "translateY(-100%)";
+        } 
+        else {
+            topbar.style.transform = "translateY(0)";
+        }
+
+        lastScroll = currentScroll;
+    });
+}
