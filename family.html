@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Family Members</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const { data } = await supabaseClient.auth.getSession();
+    if (!data.session) {
+        window.location.href = "login.html";
+    }
+});
+</script>
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">GuidedCare</h2>
+        <a href="family.html">Family Members</a>
+        <a href="records.html">Health Records</a>
+        <a href="community.html">Community</a>
+        <a href="doctor.html">Talk to Doctor</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <main class="content">
+
+        <div class="card">
+            <h2>Add Family Member</h2>
+            <input class="input" id="name" placeholder="Name">
+            <input class="input" id="age" placeholder="Age">
+            <input class="input" id="relation" placeholder="Relation">
+            <button class="btn" onclick="addMember()">Add</button>
+        </div>
+
+        <div class="card">
+            <h2>Family List</h2>
+            <div id="familyList"></div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+async function addMember() {
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const relation = document.getElementById("relation").value;
+
+    await supabaseClient.from("family_members").insert([
+        { name, age, relation }
+    ]);
+
+    loadMembers();
+}
+async function logout() {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+}
+async function loadMembers() {
+    const { data } = await supabaseClient
+        .from("family_members")
+        .select("*");
+
+    let html = "";
+    data.forEach(member => {
+        html += `<p>${member.name} - ${member.relation}</p>`;
+    });
+
+    document.getElementById("familyList").innerHTML = html;
+}
+
+loadMembers();
+</script>
+
+</body>
+</html>

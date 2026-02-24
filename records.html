@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Records</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const { data } = await supabaseClient.auth.getSession();
+    if (!data.session) {
+        window.location.href = "login.html";
+    }
+});
+</script>
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">GuidedCare</h2>
+        <a href="family.html">Family Members</a>
+        <a href="records.html">Health Records</a>
+        <a href="community.html">Community</a>
+        <a href="doctor.html">Talk to Doctor</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </aside>
+
+    <main class="content">
+
+        <div class="card">
+            <h2>Add Health Record</h2>
+            <input class="input" id="patient" placeholder="Patient Name">
+            <input class="input" id="diagnosis" placeholder="Diagnosis">
+            <input class="input" id="prescription" placeholder="Prescription">
+            <button class="btn" onclick="addRecord()">Save</button>
+        </div>
+
+        <div class="card">
+            <h2>Records List</h2>
+            <div id="recordList"></div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+async function addRecord() {
+    const patient = document.getElementById("patient").value;
+    const diagnosis = document.getElementById("diagnosis").value;
+    const prescription = document.getElementById("prescription").value;
+
+    await supabaseClient.from("health_records").insert([
+        { patient_name: patient, diagnosis, prescription }
+    ]);
+
+    loadRecords();
+}
+async function logout() {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+}
+
+async function loadRecords() {
+    const { data } = await supabaseClient
+        .from("health_records")
+        .select("*");
+
+    let html = "";
+    data.forEach(record => {
+        html += `<p>${record.patient_name} - ${record.diagnosis}</p>`;
+    });
+
+    document.getElementById("recordList").innerHTML = html;
+}
+
+loadRecords();
+</script>
+
+</body>
+</html>
