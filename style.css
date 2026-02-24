@@ -105,7 +105,7 @@ body {
     padding: 25px;
     margin-bottom: 25px;
     border-radius: 12px;
-    /* box-shadow: 0 6px 20px rgba(0,0,0,0.08); */
+     box-shadow: 0 100px 300px rgba(0,0,0,0.08); 
     /* border-left: 6px solid #2ba7a0; */
     transition: 0.3s ease;
 }
