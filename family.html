@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
+    <script src="script.js"></script>
     <script>
 document.addEventListener("DOMContentLoaded", async () => {
     const { data } = await supabaseClient.auth.getSession();
@@ -22,7 +23,7 @@ fetch('sidebar.html')
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body onload="checkAuth(); loadFamily();">
 
 <div class="layout">
 
@@ -54,37 +55,7 @@ fetch('sidebar.html')
 
 </div>
 
-<script>
-async function addMember() {
-    const name = document.getElementById("name").value;
-    const age = document.getElementById("age").value;
-    const relation = document.getElementById("relation").value;
 
-    await supabaseClient.from("family_members").insert([
-        { name, age, relation }
-    ]);
-
-    loadMembers();
-}
-async function logout() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-}
-async function loadMembers() {
-    const { data } = await supabaseClient
-        .from("family_members")
-        .select("*");
-
-    let html = "";
-    data.forEach(member => {
-        html += `<p>${member.name} - ${member.relation}</p>`;
-    });
-
-    document.getElementById("familyList").innerHTML = html;
-}
-
-loadMembers();
-</script>
 
 </body>
 </html>

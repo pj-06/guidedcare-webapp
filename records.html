@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
+    <script src="script.js"></script>
     <script>
 document.addEventListener("DOMContentLoaded", async () => {
     const { data } = await supabaseClient.auth.getSession();
@@ -22,7 +23,7 @@ fetch('sidebar.html')
   });
 </script>
 </head>
-<body>
+<body onload="checkAuth(); loadFamilyDropdown(); loadRecords();">
 
 <div class="layout">
 
@@ -53,62 +54,7 @@ fetch('sidebar.html')
 
 </div>
 
-<script>
-async function addRecord() {
-    const patient = document.getElementById("patientSelect").value;
-    const diagnosis = document.getElementById("diagnosis").value;
-    const prescription = document.getElementById("prescription").value;
 
-    await supabaseClient.from("health_records").insert([
-        { patient_name: patient, diagnosis, prescription }
-    ]);
-
-    document.getElementById("diagnosis").value = "";
-    document.getElementById("prescription").value = "";
-
-    loadRecords();
-}
-async function logout() {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-}
-
-async function loadRecords() {
-    const { data } = await supabaseClient
-        .from("health_records")
-        .select("*");
-
-    let html = "";
-    data.forEach(record => {
-        html += `
-<div class="card">
-    <h3>${record.patient_name}</h3>
-    <p><strong>Diagnosis:</strong> ${record.diagnosis}</p>
-    <p><strong>Prescription:</strong> ${record.prescription}</p>
-</div>
-`;
-    });
-
-    document.getElementById("recordList").innerHTML = html;
-}
-
-async function loadFamilyDropdown() {
-    const { data } = await supabaseClient
-        .from("family_members")
-        .select("*");
-
-    let options = "";
-    data.forEach(member => {
-        options += `<option value="${member.name}">${member.name}</option>`;
-    });
-
-    document.getElementById("patientSelect").innerHTML = options;
-}
-
-loadFamilyDropdown();
-
-loadRecords();
-</script>
 
 </body>
 </html>

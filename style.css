@@ -14,11 +14,15 @@ body {
 
 /* Sidebar full height */
 .sidebar {
-    width: 240px;
+    width: 190px;
     background: #0e4d64;
     color: white;
     padding: 25px 20px;
-    min-height: 100vh;   /* Forces full screen height */
+
+    position: fixed;   /* THIS IS KEY */
+    top: 0;
+    left: 0;
+    height: 100vh;     /* Full screen height */
 }
 
 .logo {
@@ -43,8 +47,9 @@ body {
 
 /* ==== Main Content ==== */
 .content {
-    flex: 1;
+    margin-left: 240px; /* Same as sidebar width */
     padding: 40px;
+    flex:1;
 }
 
 /* ==== Medical Cards ==== */
@@ -98,4 +103,13 @@ select.input {
 h2 {
     margin-top: 0;
     color: #0e4d64;
+}
+
+.delete-btn {
+    background: #e53935;
+    margin-top: 10px;
+}
+
+.delete-btn:hover {
+    background: #c62828;
 }
