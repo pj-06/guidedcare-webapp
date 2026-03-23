@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>First Aid Assistant</title>
+    <link rel="stylesheet" href="firstaid.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🚑 First Aid Assistant</h1>
+    <p class="subtitle">Select a situation to get immediate help</p>
+
+    <div class="card-grid">
+        <div class="card" onclick="startCase('bleeding')">🩸 Bleeding</div>
+        <div class="card" onclick="startCase('burn')">🔥 Burn</div>
+        <div class="card" onclick="startCase('fracture')">🦴 Fracture</div>
+        <div class="card" onclick="startCase('unconscious')">😵 Unconscious</div>
+        <div class="card" onclick="startCase('choking')">😷 Choking</div>
+    </div>
+
+    <div id="questionBox"></div>
+
+    <div id="guideBox" class="guide-card"></div>
+
+</div>
+
+<script src="firstaid.js"></script>
+</body>
+</html>

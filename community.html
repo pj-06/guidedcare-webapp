@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Forum</title>
+    <link rel="stylesheet" href="community.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Community Forum</h1>
+
+    <div class="post-form">
+        <input type="text" id="title" placeholder="Post Title">
+        <textarea id="content" placeholder="Write your post"></textarea>
+        <button id="postBtn">Create Post</button>
+        <p id="errorMsg" class="error"></p>
+    </div>
+
+    <h2>Recent Posts</h2>
+    <div id="posts" class="posts-container"></div>
+
+</div>
+
+<script src="community.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+}
+
+.container {
+    width: 60%;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+.post-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.post-form input,
+.post-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.post-form button {
+    padding: 10px 20px;
+    border: none;
+    background: #1e3a8a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post-form button:hover {
+    background: #162d66;
+}
+
+.posts-container {
+    margin-top: 20px;
+}
+
+.post-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.error {
+    color: red;
+}
