@@ -10,9 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="supabase.js"></script>
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
 
@@ -29,69 +26,214 @@
 
         });
     </script>
-    ```
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
+    <div id="sidebar-container"></div>
+
     <div id="topbar-container"></div>
+    <main class="content">
 
-    <div class="layout">
+        <!-- HERO SECTION -->
+        <section class="hero">
 
-        
-        <div id="sidebar-container"></div>
-
-        <main class="content">
-
-            <!-- Welcome Section -->
-            <div class="card welcome-card">
-                <h2>🏥 Healthcare Dashboard</h2>
-                <p>Monitor your family’s health and records in one place.</p>
-            </div>
-
-            <!-- Stats Section -->
-            <div class="stats-grid">
-
-                <div class="stat-card">
-                    👨‍👩‍👧 Family Members
-                    <span id="memberCount">0</span>
-                </div>
-
-                <div class="stat-card">
-                    🩺 Medical Records
-                    <span id="recordCount">0</span>
-                </div>
+            <!-- LEFT SIDE -->
+            <div class="hero-text">
+                <p class="tag">Welcome Back 👋</p>
+                <h1>Manage Your Healthcare Easily</h1>
+                <p class="desc">
+                    Track records, family members, and appointments
+                </p>
 
             </div>
 
-            <div class="two-column">
+            <!-- RIGHT SIDE -->
+            <div class="hero-image">
+                <img src="assets/doctor.jpg" alt="Doctor">
+            </div>
 
-                <!-- Health Tips -->
-                <div class="card">
-                    <h2>💡 Health Tips</h2>
-                    <div class="card-grid">
-                        <div class="action-card">💧 Stay hydrated throughout the day</div>
-                        <div class="action-card">🥗 Eat a balanced and nutritious diet</div>
-                        <div class="action-card">🏃 Exercise regularly for better health</div>
-                        <div class="action-card">😴 Get enough sleep every night</div>
+        </section>
+
+        <br>
+        <!-- STATS CARDS -->
+        <div class="cards">
+
+            <div class="card ">
+                <h3>👨‍👩‍👧 Total Family Members</h3>
+                <p id="memberCount" style="font-size:24px;font-weight:bold;">0</p>
+            </div>
+
+            <div class="card">
+                <h3>🩺 Total Medical Records</h3>
+                <p id="recordCount" style="font-size:24px;font-weight:bold;">0</p>
+
+
+            </div>
+
+        </div>
+
+        <div class="card full-width">
+            <h3>Our Services</h3>
+
+            <div class="carousel">
+
+                <div class="carousel-track">
+                    <div class="carousel-group">
+
+
+                        <!-- ORIGINAL SET -->
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📊 <h4>Dashboard</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Overview of health data</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">👨‍👩‍👧 <h4>Family</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Manage family members</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📁 <h4>Records</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Store medical records</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">💬 <h4>Community</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Connect with others</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">🚑 <h4>First Aid</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Emergency guidance</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">🤖 <h4>AI Chat</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Smart assistance</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📞 <h4>Talk to Doc</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Consult doctors</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <!-- ORIGINAL SET -->
                     </div>
-                </div>
+                    <div class="carousel-group">
 
-                <!-- Recent Activity -->
-                <div class="card">
-                    <h2>Recent Activity</h2>
-                    <ul class="activity-list">
-                        <li>✔ Added new family member</li>
-                        <li>✔ Viewed medical records</li>
-                        <li>✔ Accessed first aid guide</li>
-                    </ul>
-                </div>
 
-            </div>
+                        <!-- ORIGINAL SET -->
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📊 <h4>Dashboard</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Overview of health data</p>
+                                </div>
+                            </div>
+                        </div>
 
-    </div>
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">👨‍👩‍👧 <h4>Family</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Manage family members</p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📁 <h4>Records</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Store medical records</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">💬 <h4>Community</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Connect with others</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">🚑 <h4>First Aid</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Emergency guidance</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">🤖 <h4>AI Chat</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Smart assistance</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flip-card">
+                            <div class="flip-inner">
+                                <div class="flip-front">📞 <h4>Talk to Doc</h4>
+                                </div>
+                                <div class="flip-back">
+                                    <p>Consult doctors</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+    </main>
     <script>
         Promise.all([
             fetch('topmenu.html').then(res => res.text()),
@@ -102,13 +244,16 @@
                 document.getElementById('topbar-container').innerHTML = topbarData;
                 document.getElementById('sidebar-container').innerHTML = sidebarData;
 
+                // AFTER injection initialize behavior
                 initScrollBehavior();
+
+                // Run page functions here
                 checkAuth();
+                loadFamily();
             });
     </script>
 
     <script src="script.js"></script>
-
 </body>
 
 </html>
