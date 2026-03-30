@@ -50,3 +50,39 @@ async function sendMessage() {
         chatbox.innerHTML += `<p><b>AI:</b> Connection error</p>`;
     }
 }
+// your existing sendMessage() here
+
+async function generateSummary() {
+    const notes = document.getElementById("consultationNotes").value;
+
+    if (!notes) {
+        alert("Please enter consultation notes");
+        return;
+    }
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer YOUR_API_KEY"
+        },
+        body: JSON.stringify({
+            model: "llama-3.1-8b-instant",
+            messages: [
+                {
+                    role: "system",
+                    content: "Summarize this medical consultation clearly with key advice."
+                },
+                {
+                    role: "user",
+                    content: notes
+                }
+            ]
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("summaryOutput").innerText =
+        data.choices[0].message.content;
+}

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     <main class="content">
     <h2>🏥 Healthcare Dashboard</h2>
 
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:30px;">
+    <div id="dashboardGrid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:30px;">
         
         <div class="card">
             <h3>👨‍👩‍👧 Total Family Members</h3>
@@ -46,31 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
 
     </div>
-    <!-- 🤖 AI Chat Section -->
-<div id="chatSection" class="card" style="display:none; margin-top:30px;">
-
-    <h3>🤖 AI Medical Chat</h3>
-
-    <p style="color:red; font-size:14px;">
-        ⚠️ This chatbot provides general guidance only and is not a substitute for professional medical advice.
-    </p>
-
-    <div id="chatbox" style="height:300px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-top:10px;"></div>
-
-    <div style="margin-top:10px; display:flex; gap:10px;">
-        <input 
-            type="text" 
-            id="userInput" 
-            placeholder="Ask about your symptoms..." 
-            style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;"
-        >
-
-        <button onclick="sendMessage()" class="btn">
-            Send
-        </button>
-    </div>
-
-</div>
+    <div id="dynamicContent" style="margin-top:30px;"></div>
 </main>
 <script>
 Promise.all([

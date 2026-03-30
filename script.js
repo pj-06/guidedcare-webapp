@@ -131,13 +131,32 @@ function initScrollBehavior() {
         lastScroll = currentScroll;
     });
 }
-function showChat() {
-    const chatSection = document.getElementById("chatSection");
 
-    if (!chatSection) return;
 
-    chatSection.style.display = "block";
+function startConsultation() {
+    const doctor = document.getElementById("doctorSelect").value;
 
-    // optional: scroll to chat
-    chatSection.scrollIntoView({ behavior: "smooth" });
+    alert("Connecting to " + doctor);
+
+    window.open("https://meet.google.com/", "_blank");
+}
+function loadSection(file) {
+    const container = document.getElementById("dynamicContent");
+
+    fetch(file)
+        .then(res => res.text())
+        .then(data => {
+            container.innerHTML = data;
+
+            // hide dashboard grid
+            const grid = document.querySelector("main .content > div");
+            if (grid) grid.style.display = "none";
+        });
+}
+function showDashboard() {
+    const container = document.getElementById("dynamicContent");
+    container.innerHTML = "";
+
+    const grid = document.querySelector("main .content > div");
+    if (grid) grid.style.display = "grid";
 }
