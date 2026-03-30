@@ -131,3 +131,6 @@ function initScrollBehavior() {
         lastScroll = currentScroll;
     });
 }
+function showChat() {
+    document.getElementById("chatSection").style.display = "block";
+}
