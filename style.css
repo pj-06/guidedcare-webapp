@@ -103,11 +103,12 @@ body {
 .card {
     background: #ffffff;
     padding: 25px;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     border-radius: 12px;
      box-shadow: 0 100px 300px rgba(0,0,0,0.08); 
     /* border-left: 6px solid #2ba7a0; */
     transition: 0.3s ease;
+    margin-bottom: 25px;
 }
 
 .card:hover {
@@ -233,3 +234,186 @@ h2 {
     opacity: 1;
     max-height: 500px;
 }
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* Make recent activity full width */
+.full-width {
+    grid-column: span 2;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 40px;
+    min-height: 350px; /* instead of fixed height */
+
+    background: #d3f0f3;
+    border-radius: 12px;
+
+    color: #0e4d64;
+    transition: 0.3s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* LEFT SIDE TEXT */
+.hero-text {
+    width: 50%;
+}
+
+/* RIGHT SIDE IMAGE */
+.hero-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image img {
+    width: 280px; /* adjust if needed */
+}
+
+.hero:hover {
+    transform: translateY(-4px);
+}
+
+#activityList {
+    list-style: none;
+    padding: 0;
+}
+
+#activityList li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.service-card {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    background: #e0f2fe;
+}
+
+/* ICON */
+.service-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* TITLE */
+.service-card h4 {
+    margin: 10px 0;
+    color: #0e4d64;
+}
+
+/* TEXT */
+.service-card p {
+    font-size: 13px;
+    color: #555;
+}
+
+.carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scroll 50s linear infinite;
+}
+
+.carousel-group {
+    display: flex;
+    gap: 25px;
+}
+
+/* Pause on hover */
+.carousel:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.flip-card {
+    width: 260px;   /* increased */
+    height: 200px;  /* increased */
+    perspective: 1000px;
+}
+
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+/* Flip on hover */
+.flip-card:hover .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    backface-visibility: hidden;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* FRONT */
+.flip-front {
+    background: #d3f0f3;
+}
+
+.flip-front .icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+/* BACK */
+.flip-back {
+    background: #2563eb;
+    color: white;
+    transform: rotateY(180deg);
+}
+
