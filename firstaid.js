@@ -86,3 +86,4 @@ function showSteps(title, steps, emergency = false) {
 
     guideBox.innerHTML = html;
 }
+

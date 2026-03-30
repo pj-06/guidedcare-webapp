@@ -221,3 +221,15 @@ h2 {
 .logout-btn:hover {
     background: #00a99d;
 }
+
+.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.show {
+    opacity: 1;
+    max-height: 500px;
+}
