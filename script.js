@@ -131,3 +131,32 @@ function initScrollBehavior() {
         lastScroll = currentScroll;
     });
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const { data: members } = await supabaseClient
+        .from("family_members")
+        .select("*");
+
+    const { data: records } = await supabaseClient
+        .from("health_records")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+    document.getElementById("memberCount").innerText = members.length;
+    document.getElementById("recordCount").innerText = records.length;
+
+    // 🔥 RECENT ACTIVITY
+    const activityList = document.getElementById("activityList");
+
+    activityList.innerHTML = ""; // clear old
+
+    records.forEach(record => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `📁 Added record for <b>${record.patient_name}</b>`;
+        activityList.appendChild(li);
+    });
+
+});
