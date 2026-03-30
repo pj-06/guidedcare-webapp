@@ -1,80 +1,29 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Community Forum</title>
+    <title>Community</title>
+    <link rel="stylesheet" href="style.css">
 
-```
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="supabase.js"></script>
-
-<!-- Same font as family page -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-```
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
 </head>
 
 <body>
 
-<!-- Topbar -->
+<div class="container">
 
-<div id="topbar-container"></div>
+    <h1>Community</h1>
 
-<div class="layout">
-
-```
-<!-- Sidebar -->
-<div id="sidebar-container"></div>
-
-<main class="content">
-
-    <!-- Header Card -->
-    <div class="card" style="background:#e6f4f7;border-left:6px solid #0e4d64;">
-        <h2>🌐 Community Forum</h2>
-        <p>Connect, share, and learn from the community.</p>
-    </div>
-
-    <!-- Create Post -->
     <div class="card">
-        <h2>Create Post</h2>
-        <input class="input" type="text" id="title" placeholder="Post Title">
-        <textarea class="input" id="content" placeholder="Write your post"></textarea>
-        <button class="btn" id="postBtn">Create Post</button>
-        <p id="errorMsg" class="error"></p>
+        <input id="title" class="input" placeholder="Title">
+        <textarea id="content" class="input" placeholder="Write your post"></textarea>
+        <button class="btn" onclick="createPost()">Post</button>
     </div>
 
-    <!-- Posts Section -->
-    <div class="card">
-        <h2>Recent Posts</h2>
-        <div id="posts" class="posts-container"></div>
-    </div>
-
-</main>
-```
+    <div id="posts"></div>
 
 </div>
-
-<!-- Load Topbar + Sidebar -->
-
-<script>
-Promise.all([
-    fetch('topmenu.html').then(res => res.text()),
-    fetch('sidebar.html').then(res => res.text())
-])
-.then(([topbarData, sidebarData]) => {
-
-    document.getElementById('topbar-container').innerHTML = topbarData;
-    document.getElementById('sidebar-container').innerHTML = sidebarData;
-
-    // Initialize shared behavior
-    initScrollBehavior();
-
-    // Optional auth check (if you use it)
-    if (typeof checkAuth === "function") checkAuth();
-});
-</script>
 
 <script src="community.js"></script>
 

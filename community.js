@@ -1,29 +1,29 @@
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("postBtn").addEventListener("click", createPost);
-    loadPosts();
-});
+document.addEventListener("DOMContentLoaded", loadPosts);
 
-// CREATE POST
+// 🔹 GET USER
+async function getUser() {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    return user;
+}
+
+// 🔹 CREATE POST
 async function createPost() {
+    const user = await getUser();
+
+    if (!user) return alert("Login required");
+
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
-    const errorMsg = document.getElementById("errorMsg");
 
-    if (!title || !content) {
-        errorMsg.textContent = "Fill all fields";
-        return;
-    }
-
-    errorMsg.textContent = "";
+    if (!title || !content) return alert("Fill all fields");
 
     const { error } = await supabaseClient
         .from("community_posts")
-        .insert([{ title, content }]);
+        .insert([{ title, content, user_id: user.id }]);
 
     if (error) {
-        console.error("Insert error:", error);
-        errorMsg.textContent = "Error creating post";
-        return;
+        console.error(error);
+        return alert(error.message);
     }
 
     document.getElementById("title").value = "";
@@ -32,100 +32,184 @@ async function createPost() {
     loadPosts();
 }
 
-// LOAD POSTS
+// 🔹 LOAD POSTS
 async function loadPosts() {
-    const { data, error } = await supabaseClient
+    const user = await getUser();
+
+    const { data: posts } = await supabaseClient
         .from("community_posts")
         .select("*")
         .order("created_at", { ascending: false });
 
-    if (error) {
-        console.error("Fetch error:", error);
-        return;
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
+
+    for (const post of posts) {
+
+        if (!post.id) continue;
+
+        // PROFILE
+        const { data: profile } = await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", post.user_id)
+            .maybeSingle();
+
+        // LIKE COUNT
+        const { count } = await supabaseClient
+            .from("likes")
+            .select("*", { count: "exact", head: true })
+            .eq("post_id", post.id);
+
+        // CHECK IF USER LIKED
+        let liked = false;
+        if (user) {
+            const { data } = await supabaseClient
+                .from("likes")
+                .select("*")
+                .eq("post_id", post.id)
+                .eq("user_id", user.id);
+
+            liked = data.length > 0;
+        }
+
+        const isOwner = user && user.id === post.user_id;
+
+        container.innerHTML += `
+            <div class="card">
+
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${profile?.avatar_url || ''}" 
+                         style="width:35px;height:35px;border-radius:50%;">
+                    <strong>${profile?.username || "User"}</strong>
+                </div>
+
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+
+                <button onclick="toggleLike(${post.id})"
+                    style="color:${liked ? 'red' : 'black'}">
+                    ❤️ ${count || 0}
+                </button>
+
+                ${
+                    isOwner
+                    ? `
+                        <button onclick="editPost(${post.id})">Edit</button>
+                        <button onclick="deletePost(${post.id})">Delete</button>
+                      `
+                    : ""
+                }
+
+                <div>
+                    <input id="comment-${post.id}" placeholder="Comment">
+                    <button onclick="addComment(${post.id})">Send</button>
+                </div>
+
+                <div id="comments-${post.id}"></div>
+
+            </div>
+        `;
+
+        loadComments(post.id);
     }
-
-    const postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = "";
-
-    data.forEach(post => {
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("post-card");
-
-        const titleEl = document.createElement("h3");
-        titleEl.textContent = post.title;
-
-        const contentEl = document.createElement("p");
-        contentEl.textContent = post.content;
-
-        const timeEl = document.createElement("small");
-        timeEl.textContent = new Date(post.created_at).toLocaleString();
-
-        // DELETE BUTTON
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "🗑 Delete";
-        deleteBtn.onclick = () => deletePost(post.id);
-
-        // EDIT BUTTON
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "✏ Edit";
-        editBtn.onclick = () => editPost(post.id, post.title, post.content);
-
-        // Append elements
-        postDiv.appendChild(titleEl);
-        postDiv.appendChild(contentEl);
-        postDiv.appendChild(timeEl);
-        postDiv.appendChild(document.createElement("br"));
-        postDiv.appendChild(document.createElement("br"));
-        postDiv.appendChild(deleteBtn);
-        postDiv.appendChild(editBtn);
-
-        postsContainer.appendChild(postDiv);
-    });
 }
 
-// DELETE POST
-async function deletePost(id) {
-    const confirmDelete = confirm("Delete this post?");
-    if (!confirmDelete) return;
+// 🔹 TOGGLE LIKE (NO FLICKER)
+async function toggleLike(postId) {
+    if (!postId) return;
 
-    console.log("Deleting:", id);
+    const user = await getUser();
+    if (!user) return alert("Login required");
 
-    const { error } = await supabaseClient
-        .from("community_posts")
-        .delete()
-        .eq("id", id);
+    const { data } = await supabaseClient
+        .from("likes")
+        .select("*")
+        .eq("post_id", postId)
+        .eq("user_id", user.id);
 
-    if (error) {
-        console.error("Delete error:", error);
-        return;
+    if (data.length > 0) {
+        await supabaseClient
+            .from("likes")
+            .delete()
+            .eq("post_id", postId)
+            .eq("user_id", user.id);
+    } else {
+        await supabaseClient
+            .from("likes")
+            .insert([{ post_id: postId, user_id: user.id }]);
     }
 
     loadPosts();
 }
 
-// EDIT POST
-function editPost(id, oldTitle, oldContent) {
-    const newTitle = prompt("Edit title:", oldTitle);
-    const newContent = prompt("Edit content:", oldContent);
+// 🔹 EDIT
+async function editPost(id) {
+    if (!id) return;
 
-    if (!newTitle || !newContent) return;
+    const title = prompt("New title");
+    const content = prompt("New content");
 
-    updatePost(id, newTitle, newContent);
-}
+    if (!title || !content) return;
 
-// UPDATE POST
-async function updatePost(id, title, content) {
-    console.log("Updating:", id, title, content);
-
-    const { error } = await supabaseClient
+    await supabaseClient
         .from("community_posts")
         .update({ title, content })
         .eq("id", id);
 
-    if (error) {
-        console.error("Update error:", error);
-        return;
-    }
+    loadPosts();
+}
+
+// 🔹 DELETE
+async function deletePost(id) {
+    if (!id) return;
+    if (!confirm("Delete post?")) return;
+
+    await supabaseClient
+        .from("community_posts")
+        .delete()
+        .eq("id", id);
 
     loadPosts();
+}
+
+// 🔹 ADD COMMENT
+async function addComment(postId) {
+    if (!postId) return;
+
+    const user = await getUser();
+    if (!user) return alert("Login required");
+
+    const input = document.getElementById(`comment-${postId}`);
+    const content = input.value;
+
+    if (!content) return;
+
+    await supabaseClient
+        .from("comments")
+        .insert([{ post_id: postId, content, user_id: user.id }]);
+
+    input.value = "";
+
+    loadComments(postId);
+}
+
+// 🔹 LOAD COMMENTS
+async function loadComments(postId) {
+    if (!postId) return;
+
+    const { data } = await supabaseClient
+        .from("comments")
+        .select("*")
+        .eq("post_id", postId)
+        .order("created_at");
+
+    const container = document.getElementById(`comments-${postId}`);
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    data.forEach(c => {
+        container.innerHTML += `<p>💬 ${c.content}</p>`;
+    });
 }
