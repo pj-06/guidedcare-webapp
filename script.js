@@ -132,5 +132,12 @@ function initScrollBehavior() {
     });
 }
 function showChat() {
-    document.getElementById("chatSection").style.display = "block";
+    const chatSection = document.getElementById("chatSection");
+
+    if (!chatSection) return;
+
+    chatSection.style.display = "block";
+
+    // optional: scroll to chat
+    chatSection.scrollIntoView({ behavior: "smooth" });
 }
